@@ -14,7 +14,7 @@ The project contains the manifest to deploy Stardog onto a Kubernetes cluster us
 To run local you should have:
 
   * a Kubernetes cluster running on your machine and `kubectl` should be configured to your local cluster.
-  * a highly available Zookeeper service running. This tutorial assumes you have deployed with [Sauce ZooKeeper](https://github.com/sauce/consortia/zookeper)
+  * a highly available Zookeeper service running. This tutorial assumes you have deployed with [Sauce ZooKeeper](https://github.com/sauce-consortia/zookeeper)
 
 Once you have those up and running, follow the steps below:
 
