@@ -4,10 +4,10 @@ The project contains the manifest to deploy Stardog onto a Kubernetes cluster us
 
 ## Pre-requisites
 
-  * [Docker]()
-  * [Kubernetes]()
-  * [Kustomize]()
-  * [Apache ZooKeeper]()
+  * [Docker](https://www.docker.com/)
+  * [Kubernetes](https://kubernetes.io/)
+  * [Kustomize](https://kubernetes-sigs.github.io/kustomize/)
+  * [Apache ZooKeeper](https://zookeeper.apache.org/)
 
 ## Running locally
 
