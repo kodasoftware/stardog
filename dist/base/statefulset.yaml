@@ -45,6 +45,9 @@ spec:
           volumeMounts:
             - name: stardog-properties
               mountPath: /mnt/stardog
+          env:
+            - name: STARDOG_HOME
+              value: /var/opt/stardog
       restartPolicy: Always
       volumes:
         - name: stardog-properties
