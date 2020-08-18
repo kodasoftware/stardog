@@ -5,7 +5,7 @@ resources:
   - ../../base
 images:
   - name: gcr.io/sauce-gcr--hawk/stardog
-    newTag: 0.3.3
+    newTag: 0.3.4
 replicas:
   - name: stardog
     count: 3

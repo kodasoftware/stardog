@@ -9,6 +9,6 @@ else
   echo "No stardog properties found at mountpoint"
 fi
 
-echo "\npack.node.address=$(hostname -f):5280" >> /opt/stardog/stardog.properties
+printf '\n%s' "pack.node.address=$(hostname -f):5280" >> /opt/stardog/stardog.properties
 
 /opt/stardog/bin/stardog-admin server start --foreground --home $STARDOG_HOME --verbose
