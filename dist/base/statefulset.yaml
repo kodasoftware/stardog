@@ -58,13 +58,13 @@ spec:
                   value: Basic YWRtaW46YWRtaW4= # Very crufty
               port: 5820
             initialDelaySeconds: 5
-          # lifecycle:
-          #   preStop:
-          #     exec:
-          #       command:
-          #       - /bin/sh
-          #       - -c
-          #       - /opt/stardog/bin/stardog-admin server stop
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - /opt/stardog/bin/stardog-admin server stop --home $STARDOG_HOME
           ports:
             - name: http
               containerPort: 5820
