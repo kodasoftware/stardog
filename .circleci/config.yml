@@ -16,14 +16,22 @@ workflows:
           filters:
             branches:
               only: master
-      - confirm_deploy:
+      - confirm_dev:
           type: approval
           requires:
             - publish
       - deploy:
           context: Sauce
           requires:
-            - confirm_deploy
+            - confirm_dev
+      - confirm_test:
+          type: approval
+          requires:
+            - publish
+      - deploy_test:
+          context: Sauce
+          requires:
+            - confirm_test
 
 
 # 
@@ -102,6 +110,29 @@ jobs:
             git clone git@github.com:sauce-consortia/stardog.git
             gcloud container clusters get-credentials sauce --region europe-west2
             kustomize build stardog/dist/overlays/dev | kubectl apply -f -
+  deploy_test:
+    executor: gcloud
+    steps:
+      - checkout
+      - fingerprint
+      - setup_remote_docker
+      - dependencies
+      - gcloud_auth:
+          credentials: $GOOGLE_CREDENTIALS
+          project_id: sauce-k8s--yak
+          region: europe-west2
+          ttl: 30m
+      - gcloud_ssh_setup:
+          ttl: 30m
+      - gcloud_ssh:
+          instance: bastion-instance
+          zone: europe-west2-a
+          script: |
+            rm -rf stardog
+            ssh -T github.com -o "StrictHostKeyChecking no"
+            git clone git@github.com:sauce-consortia/stardog.git
+            gcloud container clusters get-credentials sauce --region europe-west2
+            kustomize build stardog/dist/overlays/test | kubectl apply -f -
 
 
 # 
