@@ -22,22 +22,6 @@ patches:
       name: stardog
     patch: |-
       - op: add
-        path: /spec/volumeClaimTemplates
-        value:
-          - metadata:
-              name: datadir
-            spec:
-              accessModes: 
-                - ReadWriteOnce
-              resources:
-                requests:
-                  storage: 10Gi
-      - op: add
-        path: /spec/template/spec/containers/0/volumeMounts/1
-        value:
-          name: datadir
-          mountPath: /var/opt/stardog/data
-      - op: add
         path: /spec/template/spec/affinity
         value: 
           nodeAffinity:
