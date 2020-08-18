@@ -1,0 +1,62 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: test
+resources:
+  - ../../base
+images:
+  - name: gcr.io/sauce-gcr--hawk/stardog
+    newTag: 0.1.0
+configMapGenerator:
+  - name: stardog-properties
+    behavior: create
+    literals:
+      - pack.enabled=true
+      - pack.zookeeper.address=zk-cs.test.svc.cluster.local:2181
+      - pack.cluster.address=zk-cs.test.svc.cluster.local:2181
+      - pack.zookeeper.auth=admin:admin
+patches:
+  - target:
+      group: apps
+      version: v1
+      kind: StatefulSet
+      name: stardog
+    patch: |-
+      - op: add
+        path: /spec/volumeClaimTemplates
+        value:
+          - metadata:
+              name: datadir
+            spec:
+              accessModes: 
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 10Gi
+      - op: add
+        path: /spec/template/spec/containers/0/volumeMounts
+        value:
+          - name: datadir
+            mountPath: /var/opt/stardog/data
+      - op: add
+        path: /spec/template/spec/affinity
+        value: 
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                  - key: cloud.google.com/gke-nodepool
+                    operator: In
+                    values:
+                      - test
+  - target:
+      version: v1
+      kind: Service
+      name: stardog
+    patch: |-
+      - op: add
+        path: /metadata/annotations
+        value:
+          cloud.google.com/backend-config: '{"default": "test-graph-db"}'
+      - op: add
+        path: /spec/type
+        value: NodePort
