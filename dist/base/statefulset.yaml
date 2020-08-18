@@ -23,8 +23,6 @@ spec:
         - name: stardog
           image: gcr.io/sauce-gcr--hawk/stardog
           command:
-            - sh
-            - -c
             - /opt/stardog/bin/stardog-admin server start --foreground --home $STARDOG_HOME --verbose
           imagePullPolicy: IfNotPresent
           livenessProbe:
