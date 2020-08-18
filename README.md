@@ -24,3 +24,5 @@ Once you have those up and running, follow the steps below:
     `kustomize build dist/overlays/local | kubectl apply -f -`
 
 You should see Stardog being deployed into the `default` namespace in your local cluster.
+
+For more information about `stardog.properties` see the ß[stardog.properties example](https://github.com/stardog-union/stardog-examples/blob/develop/config/stardog.properties).
