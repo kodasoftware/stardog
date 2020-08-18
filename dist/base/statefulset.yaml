@@ -19,25 +19,25 @@ spec:
       labels:
         app: stardog
     spec:
-      initContainers:
-        - name: wait-for-zk
-          image: busybox
-          command:
-          - /bin/sh
-          - -c
-          - |
-            while :
-            do
-              echo "Checking for ZK followers"
-              ZK_MNTR=$(echo mntr | nc zk-cs.dev.svc.cluster.local 2181)
-              ZK_FOLLOWERS=$(echo "${ZK_MNTR}" | grep zk_synced_followers | awk '{print $2}')
-              echo "Currently ${ZK_FOLLOWERS} ZK followers"
-              if [[ "${ZK_FOLLOWERS}" -gt "1" ]]; then
-                echo "ZK has two sync'd followers (with the leader that makes 3)"
-                exit 0
-              fi
-              sleep 1
-            done
+      # initContainers:
+      #   - name: wait-for-zk
+      #     image: busybox
+      #     command:
+      #     - /bin/sh
+      #     - -c
+      #     - |
+      #       while :
+      #       do
+      #         echo "Checking for ZK followers"
+      #         ZK_MNTR=$(echo mntr | nc zk-cs.dev.svc.cluster.local 2181)
+      #         ZK_FOLLOWERS=$(echo "${ZK_MNTR}" | grep zk_synced_followers | awk '{print $2}')
+      #         echo "Currently ${ZK_FOLLOWERS} ZK followers"
+      #         if [[ "${ZK_FOLLOWERS}" -gt "1" ]]; then
+      #           echo "ZK has two sync'd followers (with the leader that makes 3)"
+      #           exit 0
+      #         fi
+      #         sleep 1
+      #       done
       containers:
         - name: stardog
           image: gcr.io/sauce-gcr--hawk/stardog
