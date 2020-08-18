@@ -11,4 +11,4 @@ fi
 
 printf '\n%s' "pack.node.address=$(hostname -f)" >> $STARDOG_HOME/stardog.properties
 
-/opt/stardog/bin/stardog-admin server start --foreground --home $STARDOG_HOME --verbose
+/opt/stardog/bin/stardog-admin server start --home $STARDOG_HOME --verbose
