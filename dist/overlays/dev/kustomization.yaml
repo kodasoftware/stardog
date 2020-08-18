@@ -5,15 +5,12 @@ resources:
   - ../../base
 images:
   - name: gcr.io/sauce-gcr--hawk/stardog
-    newTag: 0.2.0
+    newTag: 0.3.0
 configMapGenerator:
   - name: stardog-properties
     behavior: create
-    literals:
-      - pack.enabled=true
-      - pack.zookeeper.address=zk-0.zk-cs.dev.svc.cluster.local:2181,zk-1.zk-cs.dev.svc.cluster.local:2181,zk-2.zk-cs.dev.svc.cluster.local:2181
-      - pack.cluster.address=stardog.dev.svc.cluster.local:5820
-      - pack.zookeeper.auth=admin:admin
+    files:
+      - stardog.properties
 patches:
   - target:
       group: apps

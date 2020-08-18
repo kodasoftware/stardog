@@ -48,7 +48,7 @@ spec:
               containerPort: 5820
           volumeMounts:
             - name: stardog-properties
-              mountPath: /opt/stardog/stardog.properties
+              mountPath: /mnt/stardog
       restartPolicy: Always
       volumes:
         - name: stardog-properties
