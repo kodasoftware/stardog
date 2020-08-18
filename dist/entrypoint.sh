@@ -11,4 +11,4 @@ fi
 
 echo "pack.node.address=$(hostname -f):5280" >> /opt/stardog/stardog.properties
 
-exec "$@"
+/opt/stardog/bin/stardog-admin server start --foreground --home $STARDOG_HOME --verbose

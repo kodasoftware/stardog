@@ -5,7 +5,7 @@ resources:
   - ../../base
 images:
   - name: gcr.io/sauce-gcr--hawk/stardog
-    newTag: 0.3.1
+    newTag: 0.3.2
 configMapGenerator:
   - name: stardog-properties
     behavior: create
