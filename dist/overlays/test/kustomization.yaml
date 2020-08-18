@@ -38,10 +38,10 @@ patches:
                 requests:
                   storage: 10Gi
       - op: add
-        path: /spec/template/spec/containers/0/volumeMounts
+        path: /spec/template/spec/containers/0/volumeMounts/1
         value:
-          - name: datadir
-            mountPath: /var/opt/stardog/data
+          name: datadir
+          mountPath: /var/opt/stardog/data
       - op: add
         path: /spec/template/spec/affinity
         value: 
