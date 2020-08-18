@@ -6,6 +6,9 @@ resources:
 images:
   - name: gcr.io/sauce-gcr--hawk/stardog
     newTag: 0.1.0
+replicas:
+  - name: stardog
+    count: 3
 configMapGenerator:
   - name: stardog-properties
     behavior: create
