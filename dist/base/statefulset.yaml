@@ -49,7 +49,7 @@ spec:
                 - name: Authorization
                   value: Basic YWRtaW46YWRtaW4= # Very crufty
               port: 5820
-            initialDelaySeconds: 5
+            initialDelaySeconds: 20
           readinessProbe:
             httpGet:
               path: '/admin/healthcheck'
@@ -57,7 +57,7 @@ spec:
                 - name: Authorization
                   value: Basic YWRtaW46YWRtaW4= # Very crufty
               port: 5820
-            initialDelaySeconds: 5
+            initialDelaySeconds: 20
           lifecycle:
             preStop:
               exec:
