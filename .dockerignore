@@ -1,3 +1,4 @@
 *
 !/dist/Dockerfile
 !/dist/stardog-license-key.bin
+!/dist/entrypoint.sh
