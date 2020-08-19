@@ -40,14 +40,11 @@ spec:
       #       done
       containers:
         - name: stardog
-          image: gcr.io/sauce-gcr--hawk/stardog
+          image: stardog/stardog
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
               path: '/admin/healthcheck'
-              httpHeaders:
-                - name: Authorization
-                  value: Basic YWRtaW46YWRtaW4= # Very crufty
               port: 5820
             initialDelaySeconds: 120
             periodSeconds: 60
@@ -55,11 +52,16 @@ spec:
           readinessProbe:
             httpGet:
               path: '/admin/healthcheck'
-              httpHeaders:
-                - name: Authorization
-                  value: Basic YWRtaW46YWRtaW4= # Very crufty
               port: 5820
             initialDelaySeconds: 120
+            periodSeconds: 60
+            failureThreshold: 10
+          command:
+            - /bin/sh
+            - -c
+            - |
+              cp /mnt/stardog/properties/* /mnt/stardog/license/* ${STARDOG_HOME}/ && \
+              /opt/stardog/bin/stardog-admin server start --port ${PORT} --home ${STARDOG_HOME} --verbose
           lifecycle:
             preStop:
               exec:
@@ -72,14 +74,23 @@ spec:
               containerPort: 5820
           volumeMounts:
             - name: stardog-properties
-              mountPath: /mnt/stardog
+              mountPath: /mnt/stardog/properties
+            - name: stardog-license
+              mountPath: /mnt/stardog/license
           env:
             - name: STARDOG_HOME
               value: /var/opt/stardog
+            - name: PORT
+              value: 5820
       restartPolicy: Always
       volumes:
         - name: stardog-properties
           configMap:
             name: stardog-properties
+            optional: true
+            defaultMode: 0777
+        - name: stardog-license
+          secret:
+            secretName: stardog-license
             optional: true
             defaultMode: 0777

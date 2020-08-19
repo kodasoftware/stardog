@@ -5,3 +5,9 @@ resources:
   - statefulset.yaml
   - poddisruptionbudget.yaml
   - service.yaml
+secretGenerator:
+  - name: stardog-license
+    behavior: create
+    type: Opaque
+    files:
+      - secrets/stardog-license-key.bin
