@@ -81,7 +81,7 @@ spec:
             - name: STARDOG_HOME
               value: /var/opt/stardog
             - name: PORT
-              value: 5820
+              value: "5820"
       restartPolicy: Always
       volumes:
         - name: stardog-properties
