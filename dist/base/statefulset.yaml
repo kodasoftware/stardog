@@ -62,7 +62,7 @@ spec:
             - |
               set -ex
               cp /mnt/stardog/properties/* /mnt/stardog/license/* ${STARDOG_HOME}/
-              printf '\n%s' "pack.cluster.address=zk-0.zk-cs.test,zk-1.zk-cs.test,zk-2.zk-cs.test" >> ${STARDOG_HOME}/stardog.properties
+              printf '\n%s' "pack.cluster.address=zk-cs.test.svc.cluster.local" >> ${STARDOG_HOME}/stardog.properties
               printf '\n%s' "pack.node.address=$(hostname -i)"
               /opt/stardog/bin/stardog-admin server start --foreground --port ${PORT} --home ${STARDOG_HOME} --verbose
           lifecycle:
