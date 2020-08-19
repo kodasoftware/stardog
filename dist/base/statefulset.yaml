@@ -59,7 +59,7 @@ spec:
                 - name: Authorization
                   value: Basic YWRtaW46YWRtaW4= # Very crufty
               port: 5820
-            initialDelaySeconds: 5
+            initialDelaySeconds: 120
           lifecycle:
             preStop:
               exec:
