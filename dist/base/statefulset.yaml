@@ -60,9 +60,10 @@ spec:
             - /bin/sh
             - -c
             - |
-              cp /mnt/stardog/properties/* /mnt/stardog/license/* ${STARDOG_HOME}/ && \
-              printf '\n%s' "pack.zookeeper.address=${ZK_CS_PORT_2181_TCP_ADDR}:${ZK_CS_PORT_2181_TCP_PORT}" >> $STARDOG_HOME/stardog.properties && \
-              /opt/stardog/bin/stardog-admin server start --port ${PORT} --home ${STARDOG_HOME} --verbose
+              set -ex
+              cp /mnt/stardog/properties/* /mnt/stardog/license/* ${STARDOG_HOME}/
+              printf '\n%s' "pack.zookeeper.address=${ZK_CS_PORT_2181_TCP_ADDR}:${ZK_CS_PORT_2181_TCP_PORT}" >> $STARDOG_HOME/stardog.properties
+              /opt/stardog/bin/stardog-admin server start --foreground --port ${PORT} --home ${STARDOG_HOME} --verbose
           # lifecycle:
           #   preStop:
           #     exec:
@@ -83,6 +84,12 @@ spec:
               value: /var/opt/stardog
             - name: PORT
               value: "5820"
+              - name: STARDOG_LICENSE_PATH
+              value: "/mnt/stardog/license/stardog-license-key.bin"
+            - name: STARDOG_PROPERTIES
+              value: "/mnt/stardog/properties/stardog.properties"
+            - name: STARDOG_SERVER_JAVA_ARGS
+              value: "-Djava.io.tmpdir=/tmp -Xmx2g -Xms2g -XX:MaxDirectMemorySize=1g"
       restartPolicy: Always
       volumes:
         - name: stardog-properties
