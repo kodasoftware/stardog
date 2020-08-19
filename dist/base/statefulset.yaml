@@ -63,7 +63,7 @@ spec:
               set -ex
               cp /mnt/stardog/properties/* /mnt/stardog/license/* ${STARDOG_HOME}/
               printf '\n%s' "pack.zookeeper.address=${ZK_CS_PORT_2181_TCP_ADDR}:${ZK_CS_PORT_2181_TCP_PORT}" >> ${STARDOG_HOME}/stardog.properties
-              /opt/stardog/bin/stardog-admin server start --foreground --port ${PORT} --home ${STARDOG_HOME} --verbose
+              /opt/stardog/bin/stardog-admin server start --port ${PORT} --home ${STARDOG_HOME} --verbose
           lifecycle:
             preStop:
               exec:
