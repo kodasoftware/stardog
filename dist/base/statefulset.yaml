@@ -29,7 +29,7 @@ spec:
             while :
             do
               echo "Checking for ZK followers"
-              ZK_MNTR=$(echo mntr | nc zk-cs.test.svc.cluster.local 2181)
+              ZK_MNTR=$(echo mntr | nc ${ZK_CS_PORT_2181_TCP_ADDR} ${ZK_CS_PORT_2181_TCP_PORT})
               ZK_FOLLOWERS=$(echo "${ZK_MNTR}" | grep zk_synced_followers | awk '{print $2}')
               echo "Currently ${ZK_FOLLOWERS} ZK followers"
               if [[ "${ZK_FOLLOWERS}" -gt "1" ]]; then
@@ -61,16 +61,16 @@ spec:
             - -c
             - |
               set -ex
-              cp /mnt/stardog/properties/* /mnt/stardog/license/* ${STARDOG_HOME}/
-              # printf '\n%s' "pack.zookeeper.address=${ZK_CS_PORT_2181_TCP_ADDR}:${ZK_CS_PORT_2181_TCP_PORT}" >> $STARDOG_HOME/stardog.properties
+              # cp /mnt/stardog/properties/* /mnt/stardog/license/* ${STARDOG_HOME}/
+              printf '\n%s' "pack.zookeeper.address=${ZK_CS_PORT_2181_TCP_ADDR}:${ZK_CS_PORT_2181_TCP_PORT}" >> $STARDOG_HOME/stardog.properties
               /opt/stardog/bin/stardog-admin server start --foreground --port ${PORT} --home ${STARDOG_HOME} --verbose
-          # lifecycle:
-          #   preStop:
-          #     exec:
-          #       command:
-          #       - /bin/sh
-          #       - -c
-          #       - /opt/stardog/bin/stardog-admin server stop --home $STARDOG_HOME
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - /opt/stardog/bin/stardog-admin server stop --home $STARDOG_HOME
           ports:
             - name: http
               containerPort: 5820
