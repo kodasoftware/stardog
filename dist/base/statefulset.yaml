@@ -1,21 +1,42 @@
+# apiVersion: apps/v1
+# kind: StatefulSet
+# metadata:
+#   name: stardog
+#   labels:
+#     app: stardog
+# spec:
+#   updateStrategy:
+#     type: RollingUpdate
+#   podManagementPolicy: OrderedReady
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: stardog
+#   serviceName: stardog
+#   template:
+#     metadata:
+#       name: stardog
+#       labels:
+#         app: stardog
+#     spec:
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: stardog
   labels:
     app: stardog
 spec:
-  updateStrategy:
-    type: RollingUpdate
-  podManagementPolicy: OrderedReady
-  replicas: 1
   selector:
     matchLabels:
       app: stardog
-  serviceName: stardog
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  replicas: 1
   template:
     metadata:
-      name: stardog
       labels:
         app: stardog
     spec:
