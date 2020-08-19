@@ -102,6 +102,3 @@ spec:
             secretName: stardog-license
             optional: true
             defaultMode: 0777
-
----
-
