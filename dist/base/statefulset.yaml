@@ -29,7 +29,7 @@ spec:
             while :
             do
               echo "Checking for ZK followers"
-              ZK_MNTR=$(echo mntr | nc ${ZK_CS_PORT_2181_TCP_ADDR} ${ZK_CS_PORT_2181_TCP_PORT})
+              ZK_MNTR=$(echo mntr | nc zk-cs.test.svc.cluster.local 2181)
               ZK_FOLLOWERS=$(echo "${ZK_MNTR}" | grep zk_synced_followers | awk '{print $2}')
               echo "Currently ${ZK_FOLLOWERS} ZK followers"
               if [[ "${ZK_FOLLOWERS}" -gt "1" ]]; then
