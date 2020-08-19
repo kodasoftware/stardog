@@ -62,10 +62,11 @@ spec:
             - |
               set -ex
               cp /mnt/stardog/properties/* /mnt/stardog/license/* ${STARDOG_HOME}/
+              getent hosts zk-cs.test.svc.cluster.local  | awk '{ print $1 }' >> ./zk-ips
               printf '\n%s' "pack.zookeeper.address=" >> ${STARDOG_HOME}/stardog.properties
               while IFS= read -r line; do
                 echo "$line:2181," >> ${STARDOG_HOME}/stardog.properties
-              done < $(getent hosts zk-cs.test.svc.cluster.local  | awk '{ print $1 }')
+              done < ./zk-ips
               sed -ie 's/,$//' ${STARDOG_HOME}/stardog.properties
               # printf '\n%s' "pack.zookeeper.address=zk-cs.test.svc.cluster.local" >> ${STARDOG_HOME}/stardog.properties
               # printf '\n%s' "pack.node.address=$(hostname -i)"
