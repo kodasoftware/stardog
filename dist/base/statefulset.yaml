@@ -1,24 +1,24 @@
-# apiVersion: apps/v1
-# kind: StatefulSet
-# metadata:
-#   name: stardog
-#   labels:
-#     app: stardog
-# spec:
-#   updateStrategy:
-#     type: RollingUpdate
-#   podManagementPolicy: OrderedReady
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: stardog
-#   serviceName: stardog
-#   template:
-#     metadata:
-#       name: stardog
-#       labels:
-#         app: stardog
-#     spec:
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: stardog
+  labels:
+    app: stardog
+spec:
+  updateStrategy:
+    type: RollingUpdate
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stardog
+  serviceName: stardog
+  template:
+    metadata:
+      name: stardog
+      labels:
+        app: stardog
+    spec:
       # initContainers:
       #   - name: wait-for-zk
       #     image: busybox
@@ -38,27 +38,6 @@
       #         fi
       #         sleep 1
       #       done
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name:  stardog
-  labels:
-    app: stardog
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: stardog
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 0
-    type: RollingUpdate
-  template:
-    metadata:
-      labels:
-        app: stardog
-    spec:
       containers:
         - name: stardog
           image: stardog/stardog
