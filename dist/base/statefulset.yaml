@@ -61,6 +61,8 @@ spec:
             - -c
             - |
               cp /mnt/stardog/properties/* /mnt/stardog/license/* ${STARDOG_HOME}/ && \
+              printf '\n%s' "pack.zookeeper.address=${ZK_CS_PORT_2181_TCP_ADDR}:${ZK_CS_PORT_2181_TCP_PORT}" >> $STARDOG_HOME/stardog.properties && \
+              printf '\n%s' "pack.node.address=$(hostname -a):5820" >> $STARDOG_HOME/stardog.properties && \
               /opt/stardog/bin/stardog-admin server start --port ${PORT} --home ${STARDOG_HOME} --verbose
           lifecycle:
             preStop:
