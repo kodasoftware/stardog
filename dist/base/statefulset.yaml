@@ -84,7 +84,7 @@ spec:
               value: /var/opt/stardog
             - name: PORT
               value: "5820"
-              - name: STARDOG_LICENSE_PATH
+            - name: STARDOG_LICENSE_PATH
               value: "/mnt/stardog/license/stardog-license-key.bin"
             - name: STARDOG_PROPERTIES
               value: "/mnt/stardog/properties/stardog.properties"
